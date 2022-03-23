@@ -1,0 +1,217 @@
+
+version: 2
+
+sources:
+  - name: sales_car
+    description: This is a replica of the Postgres database used by our app
+    tables:
+      - name: company_branches
+        description: This table contains informations about company branches
+        columns:
+          - name: id
+            description: Primary key of the company branches table
+            tests:
+              - unique
+              - not_null
+          - name: country_code
+            description: Description about country code in company branches table
+            tests:
+              - not_null
+          - name: country
+            description: Description about country in company branches table
+            tests:
+              - not_null
+          - name: state
+            description: Description about state in company branches table
+            tests:
+              - not_null
+          - name: city
+            description: Description about city in company branches table
+            tests:
+              - not_null
+          - name: name
+            description: Description about name of company in company branches table
+            tests:
+              - not_null
+          - name: latitude
+            description: Description about latitude in company branches table
+            tests:
+              - not_null
+          - name: longitude
+            description: Description about longitude in company branches table
+            tests:
+              - not_null
+          - name: phone
+            description: Description about phone in company branches table
+            tests:
+              - not_null
+      - name: order_items
+        description: This table contains informations about order items
+        columns:
+          - name: id
+            description: Primary key of the order types table
+            tests:
+              - not_null
+          - name: order_id
+            description: Foreing Key of the orders table
+            tests:
+              - not_null
+          - name: order_type_id
+            description: Foreing Key of the order types table
+            tests:
+              - not_null
+          - name: item
+            description: Multivalued column about itens in order items table
+      - name: order_types
+        description: This table contains informations about order types
+        columns:
+          - name: id
+            description: Primary key of the order types table
+            tests:
+              - unique
+              - not_null
+          - name: type
+            description: Description about order types in order types table
+            tests: 
+              - not_null
+      - name: orders
+        description: This table contains informations about orders
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns:
+                - id
+                - order_date
+        columns:
+          - name: id
+            description: Primary key of the orders table
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: Foreign Key of the customers table
+            tests:
+              - not_null
+          - name: departament_id
+            description: Foreing Key of column departament in employees table
+          - name: order_type_id
+            description: Foreing Key of the order type table
+            tests:
+              - not_null
+          - name: order_status
+            description: Description of order status in orders table
+            tests: 
+              - not_null
+              - accepted_values:
+                  values: ['delayed', 'on hold', 'pending', 'shipped']
+          - name: order_date
+            description: Column date of orders table
+            tests: 
+              - not_null
+              - dbt_utils.accepted_range:
+                  max_value: "CURRENT_TIMESTAMP()"
+          - name: return_date
+            description: Column return date of orders table
+            tests: 
+              - not_null
+  - name: seeds
+    tables:
+      - name: customers
+        description: This is a replica of the customers file.csv
+        columns:
+          - name: id
+            description: Primary key of the customers table
+            tests:
+              - unique
+              - not_null
+          - name: first_name
+            description: Description about first name code in customers table
+            tests:
+              - not_null
+          - name: last_name
+            description: Description about last name in customers table
+            tests:
+              - not_null
+          - name: gender
+            description: Description about gender in customers table
+            tests:
+              - not_null
+          - name: job_title
+            description: Description about job title in customers table
+            tests:
+              - not_null
+          - name: phone
+            description: Description about phone in customers table
+            tests:
+              - not_null
+          - name: domain
+            description: Description about domain in customers table
+            tests:
+              - not_null
+          - name: email
+            description: Description about email in customers table
+            tests:
+              - not_null
+          - name: country_code
+            description: Description country code email in customers table
+            tests:
+              - not_null
+          - name: country
+            description: Description country email in customers table
+            tests:
+              - not_null
+          - name: city
+            description: Description city email in customers table
+            tests:
+              - not_null
+          - name: latitude
+            description: Description latitude email in customers table
+            tests:
+              - not_null
+          - name: longitude
+            description: Description longitude email in customers table
+            tests:
+              - not_null
+          - name: recurring_customer
+            description: Description recurring customer email in customers table
+            tests:
+              - not_null
+          - name: customer_level
+            description: Description customer level email in customers table
+            tests: 
+              - not_null
+              - accepted_values:
+                  values: ['premium', 'platinum', 'standard', 'non-customer']
+          - name: registration_date
+            description: Column registration date of orders table
+      - name: employees
+        description: This is a replica of the employees file.csv
+        columns:
+          - name: id
+            description: Primary key of the employees table
+            tests:
+              - unique
+              - not_null
+          - name: departament_id
+            description: Foreing Key of column departament in employees table
+          - name: company_branches_id
+            description: Foreing Key of column company branches in employees table
+          - name: departament
+            description: Foreing Key of column departament in employees table
+            tests:
+              - not_null
+          - name: first_name
+            description: Foreing Key of column first name in employees table
+            tests:
+              - not_null
+          - name: last_name
+            description: Foreing Key of column last name in employees table
+            tests:
+              - not_null
+          - name: gender
+            description: Foreing Key of column gender in employees table
+            tests:
+              - not_null
+          - name: email
+            description: Foreing Key of column email in employees table
+            tests:
+              - not_null

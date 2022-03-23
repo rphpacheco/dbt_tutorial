@@ -1,0 +1,35 @@
+project: tutorial
+version: 1.0.1
+active: true
+retry: 10
+
+description: >
+  Lorem Ipsum is simply dummy text of the printing 
+  and typesetting industry. Lorem Ipsum has been 
+  the industry's standard dummy text ever since 
+  the 1500s, when an unknown printer took a galley 
+  of type and scrambled it to make a type specimen 
+  book.
+
+details: |
+  Lorem Ipsum is simply dummy text of the printing 
+  and typesetting industry. Lorem Ipsum has been 
+  the industry's standard dummy text ever since 
+  the 1500s, when an unknown printer took a galley 
+  of type and scrambled it to make a type specimen 
+  book.
+
+roles:
+  - user.read
+  - user.write
+  - user.admin
+
+roles2: [user.read, user.write, user.admin]
+
+services:
+  - prod:
+    description: project in production environment
+    action: run prod
+  - dev:
+    description: project in development environment
+    action: run dev
